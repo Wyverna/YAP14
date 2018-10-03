@@ -12,7 +12,10 @@ namespace Log
 		f.stream = &stream;
 		wcscpy_s(f.logfile, logfile);
 		f.stream->is_open();
-		if (f.stream->fail()) throw ERROR_THROW(112);
+		if (f.stream->fail())
+		{
+			throw ERROR_THROW(112);
+		}
 		return f;
 	}
 	void WriteLine(LOG log, char *c, ...)

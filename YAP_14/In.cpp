@@ -9,7 +9,7 @@ namespace In
 	{
 		IN f;
 		unsigned char ch='a';
-		unsigned char l[256]="";
+		static unsigned char l[1024]="";
 		int line = 0, position = 0, size = 0,ignor=0,i=0;
 		std::ifstream in(infile);
 		if (in.fail()==0)
@@ -17,32 +17,25 @@ namespace In
 			ch = in.get();
 			while (!in.eof())
 			{
-				if (ch == ((unsigned char)"\n"))
-				{
-					line++;
-				}
-				if (f.code[(int)ch] == IN::T)
-				{
-					position++;
-					l[i] = ch;
-					i++;
-				}
-				else if (f.code[(int)ch] == IN::F)
-				{
-					throw ERROR_THROW_IN(111, line, position);
-				}
-				else if (f.code[(int)ch] == IN::I)
-				{
-					ignor++;
-				}
-				else if (f.code[(int)ch] == 192)
-				{
-					ch ='-';
-					ignor++;
-					l[i] = ch;
-					i++;
-				}
-				ch = in.get();
+					if (ch == ((unsigned char)'\n'))
+					{
+						line++;
+					}
+					if (f.code[(int)ch] == IN::T)
+					{
+						position++;
+						l[i] = ch;
+						i++;
+					}
+					else if (f.code[(int)ch] == IN::F)
+					{
+						throw ERROR_THROW_IN(111, line, position);
+					}
+					else if (f.code[(int)ch] == IN::I)
+					{
+						ignor++;
+					}
+					ch = in.get();
 			}
 			in.close();
 			f.size = i;
@@ -53,7 +46,7 @@ namespace In
 		}
 		else
 		{
-			throw ERROR_THROW(110)
+			throw ERROR_THROW(110);
 		}
 		return f;
 	}
